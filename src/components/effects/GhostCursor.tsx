@@ -1,0 +1,12 @@
+import { useEffect,useRef } from 'react';
+import { useTypographyReducedMotion } from '../typography/useTypographyReducedMotion';
+export default function GhostCursor({color='#B497CF',size=80,trailLength=50,inertia=.5,turbulence=.5,drift=.3,bloomStrength=.6,grainIntensity=.05}){
+ const ref=useRef<HTMLCanvasElement>(null),reduced=useTypographyReducedMotion();
+ useEffect(()=>{if(!ref.current||reduced||!matchMedia('(hover: hover)').matches)return;const canvas=ref.current,ctx=canvas.getContext('2d');if(!ctx)return;let w=1,h=1,frame=0,last=0,inside=false;const target={x:0,y:0},points:{x:number;y:number}[]=[];
+ const resize=()=>{w=innerWidth;h=innerHeight;const d=Math.min(devicePixelRatio,1.5);canvas.width=w*d;canvas.height=h*d;ctx.setTransform(d,0,0,d,0,0)};resize();
+ const move=(e:PointerEvent)=>{if(e.pointerType==='touch')return;inside=true;target.x=e.clientX;target.y=e.clientY;if(!points.length)points.push({...target})};const leave=()=>{inside=false};
+ const draw=(now:number)=>{const dt=Math.min((now-(last||now))/1000,.04);last=now;ctx.clearRect(0,0,w,h);if(inside){const p=points[0]||target;points.unshift({x:p.x+(target.x-p.x)*(1-inertia),y:p.y+(target.y-p.y)*(1-inertia)});points.length=Math.min(points.length,trailLength)}else points.pop();points.forEach((p,i)=>{if(i%3)return;const strength=(1-i/Math.max(1,trailLength));const r=size*(.35+strength*.4),x=p.x+Math.sin(now*.001+i)*turbulence*9,y=p.y+Math.cos(now*.001+i)*drift*12;const g=ctx.createRadialGradient(x,y,0,x,y,r);g.addColorStop(0,color+Math.round((.04+bloomStrength*.08+grainIntensity*.1)*strength*255).toString(16).padStart(2,'0'));g.addColorStop(1,color+'00');ctx.fillStyle=g;ctx.fillRect(x-r,y-r,r*2,r*2)});frame=requestAnimationFrame(draw)};
+ const visibility=()=>{cancelAnimationFrame(frame);last=0;if(!document.hidden)frame=requestAnimationFrame(draw)};window.addEventListener('pointermove',move,{passive:true});document.documentElement.addEventListener('pointerleave',leave);window.addEventListener('resize',resize);document.addEventListener('visibilitychange',visibility);frame=requestAnimationFrame(draw);return()=>{cancelAnimationFrame(frame);window.removeEventListener('pointermove',move);document.documentElement.removeEventListener('pointerleave',leave);window.removeEventListener('resize',resize);document.removeEventListener('visibilitychange',visibility)};
+ },[reduced,color,size,trailLength,inertia,turbulence,drift,bloomStrength,grainIntensity]);
+ return reduced?null:<canvas ref={ref} className="fm-ghost-cursor" aria-hidden="true"/>;
+}

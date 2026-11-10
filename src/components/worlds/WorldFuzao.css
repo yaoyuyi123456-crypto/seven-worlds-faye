@@ -1,0 +1,61 @@
+.fz-world{--fz-acid:#d8e895;--fz-paper:#f3efdc;background:#22251f;color:var(--fz-paper);font-family:'Noto Serif SC',serif;overflow-x:clip;isolation:isolate}
+.fz-world button,.fz-world a{-webkit-tap-highlight-color:transparent;cursor:pointer}
+.fz-world button:focus-visible,.fz-world a:focus-visible{outline:2px solid var(--fz-acid);outline-offset:8px}
+.fz-nav{position:sticky;top:0;z-index:50;display:flex;justify-content:space-between;align-items:center;gap:20px;padding:20px 4vw;background:#1a201bd9;border-bottom:1px solid #ffffff30;backdrop-filter:blur(14px);font:10px 'Space Mono',monospace;letter-spacing:.09em}
+.fz-nav button,.fz-nav>div{display:flex;gap:10px;align-items:center}
+.fz-nav>div{gap:24px}.fz-nav button:hover{color:var(--fz-acid)}
+.fz-canvas,.fz-song-scene{display:grid;position:relative;min-width:0}
+.fz-backdrop,.fz-foreground,.fz-song-image,.fz-song-ink{grid-area:1/1;min-width:0;align-self:start}
+.fz-backdrop{position:relative;pointer-events:none;width:100%}
+.fz-slide{position:relative;width:100%}
+.fz-photo-flow{display:flow-root;position:relative;width:100%}
+/* Normal-flow photo: retain original 30–100%, at full browser width. */
+.fz-photo-flow img{display:block;width:100%;height:auto;max-width:none;margin-top:calc(-30% * var(--fz-ratio,0));clip-path:inset(30% 0 0)}
+.fz-foreground{position:relative;z-index:1;background:linear-gradient(115deg,#17201988,transparent 60%,#17201944);text-shadow:0 2px 20px #0009}
+.fz-hero{position:relative;min-height:86svh;padding:7vh 6vw 80px}
+.fz-edition{font:10px 'Space Mono',monospace;letter-spacing:.2em;display:block;max-width:60%;color:var(--fz-acid)}
+.fz-hero h1{position:relative;display:flex;gap:2vw;margin:7vh 0 10vh 3vw;font-weight:400;font-size:clamp(110px,22vw,340px);line-height:1.05;letter-spacing:-.1em}
+.fz-hero h1 span{display:block}.fz-hero h1 span+span{margin-top:9vh}
+.fz-english{position:absolute;top:25%;right:6%;writing-mode:vertical-rl;font:italic clamp(18px,2.3vw,34px) 'Cormorant Garamond',serif;letter-spacing:.23em}
+.fz-year{position:absolute;right:19%;top:7%;font:clamp(30px,5.5vw,80px)/.85 'Cormorant Garamond',serif;letter-spacing:-.08em;color:var(--fz-acid)}.fz-year i{margin-left:25px}
+.fz-note{margin-left:18%;font-size:clamp(14px,1.7vw,23px);line-height:2;letter-spacing:.12em}
+.fz-explore{display:block;width:fit-content;margin:40px 0 0 auto;font:11px 'Space Mono',monospace;letter-spacing:.18em;border-bottom:1px solid;padding:10px}
+.fz-song-field{position:relative;min-height:850px;margin:0 4vw 90px;scroll-margin-top:100px}
+.fz-field-label{font:11px/2 'Space Mono',monospace;letter-spacing:.12em;color:var(--fz-acid);padding:12px 0;border-top:1px solid #ffffff40}.fz-field-label small{font-size:10px;color:#eee8db}
+.fz-seed{position:absolute;z-index:2;max-width:44%;font-size:clamp(16px,2.4vw,34px)}
+.fz-seed button{display:flex;align-items:center;gap:8px;min-height:48px;padding:12px 8px;text-align:left;white-space:nowrap;transition:color .3s;text-shadow:1px 2px 16px #172019;font-size:calc(1em * var(--seed-size,1))}
+.fz-seed small{align-self:flex-start;font:10px 'Space Mono',monospace;color:var(--fz-acid);margin-top:7px}.fz-seed button:hover{color:var(--fz-acid)}.fz-seed svg{opacity:.6;flex-shrink:0}
+.fz-orbit-line{position:absolute;inset:6% 0 0;width:100%;height:94%;pointer-events:none;opacity:.35}.fz-orbit-line path{stroke:#e4e8c0;stroke-width:1;fill:none;stroke-dasharray:3 12}
+.fz-detail{scroll-margin-top:65px;outline:none}
+.fz-song-image{position:relative;width:100%;pointer-events:none}
+.fz-song-ink{position:relative;z-index:1;width:100%;min-height:110svh;padding:30px 6vw 70px;background:linear-gradient(90deg,#16251fd9,#16251f40);text-shadow:0 1px 15px #0008}
+.fz-song-toolbar{display:flex;justify-content:space-between;gap:20px;font:11px 'Space Mono',monospace;letter-spacing:.12em}
+.fz-song-heading{position:relative;margin:12vh 0 7vh;width:fit-content;max-width:90%}.fz-song-heading>span:first-child{font:10px 'Space Mono',monospace;letter-spacing:.15em;color:var(--fz-acid)}
+.fz-song-heading h2{position:relative;z-index:1;font-weight:400;font-size:clamp(75px,13vw,180px);line-height:1.3;letter-spacing:.08em;transform:rotate(-5deg);margin-top:25px}
+.fz-song-copy{position:relative;z-index:2;margin:0 4% 0 auto;width:min(660px,75%);padding:26px;background:#18261e9c;backdrop-filter:blur(4px)}
+.fz-inscription{font-size:clamp(20px,2.6vw,38px);line-height:1.8;letter-spacing:.12em}.fz-verse{white-space:pre-line;line-height:2.1;font-size:14px;margin-top:35px}.fz-art-note{font-size:13px;line-height:2.2;margin-top:40px;color:#e7e7d4}
+.fz-credits{font:10px/2.3 'Space Mono',monospace;letter-spacing:.08em;border-top:1px solid #fff4;margin-top:32px;padding-top:20px}.fz-keywords{display:flex;flex-wrap:wrap;gap:18px;font-size:11px;margin-top:20px;color:var(--fz-acid)}
+.fz-original-link{display:flex;align-items:center;gap:15px;border-bottom:1px solid;margin-top:30px;padding:12px 0;font-size:12px}
+.fz-neighbours{display:flex;flex-wrap:wrap;gap:14px 26px;position:relative;z-index:3;margin-top:70px;border-top:1px solid #fff4;padding-top:24px;font:11px 'Space Mono',monospace}.fz-neighbours button{padding:10px 2px}.fz-neighbours [aria-pressed=true]{color:var(--fz-acid);border-bottom:1px solid}
+.fz-mountains{position:absolute;top:16%;left:0;width:100%;height:auto;stroke:#d8e895b3;stroke-width:1.4;pointer-events:none}.fz-grass{transform-origin:center bottom;animation:fz-wind 13s ease-in-out infinite alternate}
+.fz-detail--nature .fz-song-heading{margin-left:5%}.fz-detail--nature .fz-song-copy{margin-right:3%;background:#1b332585}
+.fz-detail--drop{background:#111;color:#f8f7ef}.fz-detail--drop .fz-song-image{filter:grayscale(1) contrast(1.7)}
+.fz-detail--drop .fz-song-ink{background:linear-gradient(120deg,#000b,transparent 65%,#000a)}
+.fz-detail--drop .fz-song-copy{background:#111b;transform:rotate(1deg)}
+.fz-detail--drop .fz-song-heading{margin-left:14%}.fz-detail--drop h2{letter-spacing:-.08em;text-shadow:4px 0 #ffffff50}
+.fz-echo{position:absolute;left:-12%;top:40%;white-space:nowrap;pointer-events:none;font:italic clamp(60px,14vw,190px) 'Cormorant Garamond',serif;color:#ffffff24;mix-blend-mode:difference;letter-spacing:.1em}
+.fz-detail--drop .fz-song-ink:after{content:'';position:absolute;right:6%;top:18%;width:18%;height:25%;backdrop-filter:invert(1);pointer-events:none;transform:rotate(8deg);opacity:.55}
+.fz-entrance{position:fixed;z-index:1000;pointer-events:none;overflow:hidden;background:#242a23}.fz-entrance img{width:100%;height:100%;object-fit:cover}
+@keyframes fz-wind{from{transform:skewX(-3deg)}to{transform:skewX(3deg)}}
+@media(max-width:640px){
+ .fz-nav{padding:15px 4vw;gap:8px}.fz-nav>span{display:none}.fz-nav>div{gap:13px}.fz-nav>div button:last-child span{display:none}
+ .fz-hero{min-height:76svh;padding-top:6vh}.fz-edition{font-size:8px}.fz-hero h1{margin-top:14vh;font-size:31vw;gap:0}.fz-year{right:22%}.fz-english{top:29%;right:7%;font-size:15px}.fz-note{margin-left:9%;font-size:13px}
+ .fz-song-field{min-height:720px;margin-bottom:70px}.fz-seed{max-width:45%;font-size:17px}.fz-seed button{gap:3px;padding:10px 2px}.fz-seed:nth-of-type(5){left:61%!important}.fz-seed:nth-of-type(9){left:60%!important}.fz-seed svg{width:11px}.fz-seed small{font-size:8px}
+ .fz-song-heading{margin-top:10vh}.fz-song-heading h2{font-size:20vw}.fz-song-copy{width:94%;margin:0 0 0 auto;padding:20px}.fz-inscription{font-size:21px}.fz-song-toolbar{font-size:9px}.fz-mountains{top:16%}.fz-song-ink{padding-left:5vw;padding-right:5vw}
+}
+@media(prefers-reduced-motion:reduce){.fz-world *,.fz-world *:before,.fz-world *:after{animation:none!important;scroll-behavior:auto!important;transition:none!important}}
+/* Dissolve the separation between the title, song seeds and photography. */
+.fz-nav{background:transparent;backdrop-filter:none;border:0;position:absolute;left:0;right:0;top:0;text-shadow:0 2px 12px #000}.fz-backdrop{position:sticky;top:0;height:100svh;overflow:hidden}.fz-slide,.fz-slide .fz-photo-flow{height:100%}.fz-slide .fz-photo-flow img{height:100%;object-fit:cover;margin-top:0;clip-path:none}.fz-hero{min-height:78svh;padding-top:15vh;padding-bottom:4vh}.fz-hero h1{font-size:clamp(100px,19vw,280px);margin-bottom:4vh}.fz-song-field{margin-top:-23vh;min-height:90svh}.fz-field-label{opacity:.65}.fz-orbit-line{opacity:.12}.fz-note,.fz-explore{opacity:.7}.fz-song-scene{isolation:isolate}.fz-song-image{position:sticky;top:0;height:100svh;overflow:hidden}.fz-song-image .fz-photo-flow,.fz-song-image img{height:100%}.fz-song-image img{width:100%;object-fit:cover;margin:0;clip-path:none}.fz-song-ink{min-height:100svh;background:linear-gradient(90deg,#16251f88,transparent);padding-top:35px}.fz-song-copy{background:transparent;backdrop-filter:none;padding:0;width:min(850px,90%);margin:0 0 0 8vw}.fz-song-heading{margin:6vh 0 4vh}.fz-song-heading h2{font-size:clamp(65px,10vw,140px)}.fz-verse{font-size:clamp(18px,2.5vw,33px);line-height:1.9;margin-top:25px}.fz-art-note{max-width:580px}.fz-credits{border:0;padding-top:0;opacity:.7}.fz-neighbours{border:0;margin-top:35px}
+@media(max-width:640px){.fz-hero{padding-top:15vh;min-height:75svh}.fz-song-field{margin-top:-12vh;min-height:100svh}.fz-song-copy{width:90%;margin-left:3vw}.fz-song-heading{margin-top:7vh}.fz-nav{padding:20px 4vw}.fz-song-ink{padding-top:25px}}
+/* Yesanpo: the photograph itself, with translucent clerical lettering. */
+.fz-detail--nature .fz-song-ink,.fz-detail--nature .fz-song-copy{background:transparent!important;backdrop-filter:none!important;box-shadow:none;border:0}.fz-detail--nature .fz-song-image:after,.fz-detail--nature .fz-song-image:before,.fz-detail--nature .fz-photo-flow:after{display:none}.fz-detail--nature .fz-song-image{filter:none}.fz-detail--nature .fz-song-image img{filter:none!important;opacity:1!important}.fz-detail--nature .fz-song-ink{font-family:'LiSu','STLiti','隶书','Baoli SC','STKaiti',serif;color:rgba(255,252,231,.82);text-shadow:0 1px 5px #16251f99}.fz-detail--nature .fz-song-heading>span:first-child,.fz-detail--nature .fz-credits,.fz-detail--nature .fz-neighbours,.fz-detail--nature .fz-song-toolbar{font-family:inherit}.fz-detail--nature .fz-song-heading>span:first-child{font-size:clamp(18px,2vw,26px);color:rgba(248,250,217,.8);letter-spacing:.25em}.fz-detail--nature .fz-song-copy{margin-left:8vw;padding:0;width:min(660px,76%)}.fz-detail--nature .fz-art-note{color:rgba(255,252,231,.82)}.fz-detail--nature .fz-keywords{color:rgba(246,247,218,.8)}.fz-detail--nature .fz-song-heading h2{color:rgba(255,252,231,.8);font-family:inherit}.fz-green-slope-rain{position:absolute;inset:0;overflow:hidden;pointer-events:none;z-index:0;contain:paint}.fz-green-slope-rain span{position:absolute;top:-15%;font-size:var(--slope-size);writing-mode:vertical-rl;letter-spacing:.25em;line-height:1.2;color:#e3eccf;text-shadow:none;opacity:0;animation:fz-slope-fall var(--slope-duration) linear var(--slope-delay) infinite}.fz-song-heading,.fz-detail--nature .fz-song-toolbar{z-index:2;position:relative}@keyframes fz-slope-fall{0%{transform:translate(0,-40px) rotate(-8deg);opacity:0}12%{opacity:.3}80%{opacity:.22}100%{transform:translate(var(--slope-drift),115svh) rotate(var(--slope-turn));opacity:0}}@media(max-width:640px){.fz-detail--nature .fz-song-copy{width:93%;margin-left:2vw}.fz-green-slope-rain span{font-size:calc(var(--slope-size)*.75)}}@media(prefers-reduced-motion:reduce){.fz-green-slope-rain span{animation:none;top:calc(5% + var(--slope-size));opacity:.15}.fz-green-slope-rain span:nth-child(n+7){display:none}}

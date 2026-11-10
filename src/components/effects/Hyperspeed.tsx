@@ -1,0 +1,38 @@
+import { useEffect, useRef } from 'react';
+import * as THREE from 'three';
+import { useTypographyReducedMotion } from '../typography/useTypographyReducedMotion';
+import './Hyperspeed.css';
+interface Props { curve?: string; curvature?: number; speed?: number; boost?: number; fov?: number; boostFov?: number; lanes?: number; roadWidth?: number; medianWidth?: number; density?: number; trailLength?: number; lightSize?: number; poles?: number; dust?: number; glow?: number; reflections?: number; roadOpacity?: number; steer?: number; tailColors?: string[]; headColors?: string[]; poleColors?: string[]; interactive?: boolean }
+export default function Hyperspeed({curve='winding',curvature=1,speed=1,boost=3,fov=90,boostFov=130,lanes=3,roadWidth=10,medianWidth=2,density=40,trailLength=1,lightSize=1,poles=20,dust=100,glow=.6,reflections=.5,roadOpacity=.1,steer=.35,tailColors=['#d856bf','#6750a2','#c247ac'],headColors=['#03b3c3','#0e5ea5','#324555'],poleColors=['#03b3c3'],interactive=true}:Props){
+ const root=useRef<HTMLDivElement>(null),reduced=useTypographyReducedMotion();
+ useEffect(()=>{
+  const host=root.current;if(!host||reduced)return;
+  let renderer:THREE.WebGLRenderer;try{renderer=new THREE.WebGLRenderer({alpha:true,antialias:false,powerPreference:'low-power'})}catch{return}
+  renderer.setPixelRatio(Math.min(devicePixelRatio,1.5));renderer.setClearColor(0x05040d,.75);host.appendChild(renderer.domElement);
+  const scene=new THREE.Scene();scene.fog=new THREE.FogExp2(0x090817,.008);
+  const camera=new THREE.PerspectiveCamera(fov,1,.1,350);camera.position.set(0,2.4,8);
+  const materials:THREE.Material[]=[],geometries:THREE.BufferGeometry[]=[];
+  const material=(color:string,opacity=1)=>{const m=new THREE.LineBasicMaterial({color,transparent:true,opacity,blending:THREE.AdditiveBlending,depthWrite:false});materials.push(m);return m};
+  const roadMat=material('#6197ae',roadOpacity),lineMat=material('#99b7cb',.2);
+  const bend=(z:number,t:number)=>curve==='winding'?Math.sin(z*.017+t*.17)*curvature*8+Math.sin(z*.038+t*.08)*curvature*2:0;
+  const roadLines:THREE.Line[]=[];
+  for(let lane=0;lane<=lanes*2+2;lane++){const positions=new Float32Array(110*3),g=new THREE.BufferGeometry();g.setAttribute('position',new THREE.BufferAttribute(positions,3));geometries.push(g);const line=new THREE.Line(g,lane===0||lane===lanes*2+2?roadMat:lineMat);line.userData.x=(lane/(lanes*2+2)-.5)*(roadWidth*2+medianWidth);scene.add(line);roadLines.push(line)}
+  const streaks:{line:THREE.Line;z:number;x:number;side:number;length:number;mirror:THREE.Line}[]=[];
+  for(let i=0;i<density*2;i++){const side=i%2?1:-1,lane=i%Math.max(1,lanes);const x=side*(medianWidth/2+(lane+.5)*roadWidth/lanes);const colors=side>0?tailColors:headColors;const m=material(colors[i%colors.length],.6+glow*.35);const g=new THREE.BufferGeometry();g.setAttribute('position',new THREE.BufferAttribute(new Float32Array(6),3));geometries.push(g);const line=new THREE.Line(g,m);scene.add(line);const reflection=new THREE.Line(g.clone(),material(colors[i%colors.length],reflections*.16));geometries.push(reflection.geometry);scene.add(reflection);streaks.push({line,z:-Math.random()*280,x,side,length:(3+Math.random()*11)*trailLength,mirror:reflection})}
+  const posts:THREE.Line[]=[];for(let i=0;i<poles*2;i++){const g=new THREE.BufferGeometry();g.setAttribute('position',new THREE.BufferAttribute(new Float32Array(6),3));geometries.push(g);const line=new THREE.Line(g,material(poleColors[i%poleColors.length],.5));line.userData={z:-i/(Math.max(1,poles*2))*280,side:i%2?1:-1};scene.add(line);posts.push(line)}
+  const particles=new Float32Array(dust*3);for(let i=0;i<dust;i++){particles[i*3]=(Math.random()-.5)*75;particles[i*3+1]=Math.random()*25;particles[i*3+2]=-Math.random()*280}const dustGeometry=new THREE.BufferGeometry();dustGeometry.setAttribute('position',new THREE.BufferAttribute(particles,3));geometries.push(dustGeometry);const dustMaterial=new THREE.PointsMaterial({color:'#c8d8e4',size:.045*lightSize,transparent:true,opacity:.5,blending:THREE.AdditiveBlending});materials.push(dustMaterial);scene.add(new THREE.Points(dustGeometry,dustMaterial));
+  let held=false,targetX=0,frame=0,last=0,elapsed=0,multiplier=1;
+  const resize=()=>{const r=host.getBoundingClientRect();renderer.setSize(r.width,r.height,false);camera.aspect=r.width/Math.max(1,r.height);camera.updateProjectionMatrix()};const observer=new ResizeObserver(resize);observer.observe(host);resize();
+  const move=(e:PointerEvent)=>{const r=host.getBoundingClientRect();if(e.clientY<r.top||e.clientY>r.bottom)return;targetX=((e.clientX-r.left)/r.width-.5)*steer*3};
+  const down=(e:PointerEvent)=>{if((e.target as HTMLElement).closest('button,a,input'))return;const r=host.getBoundingClientRect();if(e.clientY<r.top||e.clientY>r.bottom)return;held=true;host.dataset.boosted='true'};const up=()=>{held=false;host.dataset.boosted='false'};
+  if(interactive){window.addEventListener('pointermove',move,{passive:true});window.addEventListener('pointerdown',down);window.addEventListener('pointerup',up);window.addEventListener('pointercancel',up)}
+  const tick=(now:number)=>{const dt=Math.min((now-(last||now))/1000,.04);last=now;elapsed+=dt;multiplier+=(held?boost-multiplier:1-multiplier)*Math.min(1,dt*3);camera.fov+=((held?boostFov:fov)-camera.fov)*Math.min(1,dt*3);camera.updateProjectionMatrix();camera.position.x+=(targetX-camera.position.x)*Math.min(1,dt*3);camera.lookAt(bend(-100,elapsed)*.15,1,-100);
+   roadLines.forEach(line=>{const a=line.geometry.attributes.position as THREE.BufferAttribute;for(let j=0;j<a.count;j++){const z=-j*2.7;a.setXYZ(j,line.userData.x+bend(z,elapsed),-.15,z)}a.needsUpdate=true});
+   streaks.forEach(s=>{s.z+=dt*speed*multiplier*(s.side>0?38:66);if(s.z>12)s.z=-280;const a=s.line.geometry.attributes.position as THREE.BufferAttribute;a.setXYZ(0,s.x+bend(s.z,elapsed),.24*lightSize,s.z);a.setXYZ(1,s.x+bend(s.z-s.length,elapsed),.24*lightSize,s.z-s.length);a.needsUpdate=true;const b=s.mirror.geometry.attributes.position as THREE.BufferAttribute;b.setXYZ(0,s.x+bend(s.z,elapsed),-.25,s.z);b.setXYZ(1,s.x+bend(s.z-s.length*1.5,elapsed),-.25,s.z-s.length*1.5);b.needsUpdate=true});
+   posts.forEach(p=>{p.userData.z+=dt*speed*multiplier*42;if(p.userData.z>12)p.userData.z=-280;const z=p.userData.z,x=p.userData.side*(roadWidth+medianWidth/2+1)+bend(z,elapsed),a=p.geometry.attributes.position as THREE.BufferAttribute;a.setXYZ(0,x,-.1,z);a.setXYZ(1,x,4,z);a.needsUpdate=true});
+   for(let i=0;i<dust;i++){particles[i*3+2]+=dt*speed*multiplier*30;if(particles[i*3+2]>10)particles[i*3+2]=-280}dustGeometry.attributes.position.needsUpdate=true;renderer.render(scene,camera);frame=requestAnimationFrame(tick)};
+  const visibility=()=>{cancelAnimationFrame(frame);last=0;held=false;if(!document.hidden)frame=requestAnimationFrame(tick)};document.addEventListener('visibilitychange',visibility);frame=requestAnimationFrame(tick);
+  return()=>{cancelAnimationFrame(frame);observer.disconnect();window.removeEventListener('pointermove',move);window.removeEventListener('pointerdown',down);window.removeEventListener('pointerup',up);window.removeEventListener('pointercancel',up);document.removeEventListener('visibilitychange',visibility);geometries.forEach(g=>g.dispose());materials.forEach(m=>m.dispose());renderer.dispose();renderer.domElement.remove()};
+ },[reduced,curve,curvature,speed,boost,fov,boostFov,lanes,roadWidth,medianWidth,density,trailLength,lightSize,poles,dust,glow,reflections,roadOpacity,steer,interactive]);
+ return <div ref={root} className={`hyperspeed ${reduced?'hyperspeed-still':''}`} aria-hidden="true"/>;
+}

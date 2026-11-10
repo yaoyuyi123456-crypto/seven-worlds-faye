@@ -1,0 +1,7 @@
+import Shuffle from './effects/Shuffle';
+import React from 'react';
+import './Faye2001Balloons.css';
+interface Track {number:string;title:string;signatureLyric:string;extendedLyricSnippet:string;artisticNote:string}
+export function Faye2001Balloons({tracks,photo,onSelect,onHome}:{tracks:Track[];photo:string;onSelect:(track:Track)=>void;onHome:()=>void}){
+ return <main className="fb-world"><img className="fb-photo" src={photo} alt="王菲 2001 专辑摄影"/><div className="fb-shade"/><nav><button onClick={onHome}>← HOME</button><span>FAYE WONG / 2001</span></nav><header><h1><Shuffle text="王菲"/><span><Shuffle text="2001"/></span></h1><p><Shuffle text="拾起一个漂浮的声音。"/></p></header><section className="fb-installations" aria-label="王菲2001气球歌曲目录">{tracks.map((track,i)=><div key={track.number} className={`fb-balloon-position fb-position-${i}`}><button className="fb-balloon" onClick={()=>onSelect(track)} aria-label={`进入《${track.title}》气球歌曲空间`} style={{'--balloon-delay':`${-i*1.4}s`,'--balloon-duration':`${7+i%3}s`,'--balloon-hue':`${i*31+260}`} as React.CSSProperties}><span className="fb-balloon-skin"><small>{track.number}</small><strong><Shuffle text={track.title}/></strong><i aria-hidden="true">↗</i></span><span className="fb-knot" aria-hidden="true"/><svg viewBox="0 0 80 180" className="fb-string" aria-hidden="true"><path d="M40 0 C10 45 75 75 35 110 S15 150 48 180"/></svg></button></div>)}</section></main>;
+}

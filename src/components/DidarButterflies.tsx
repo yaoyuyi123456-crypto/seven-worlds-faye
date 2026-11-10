@@ -1,0 +1,2 @@
+import './DidarButterflies.css';
+export function DidarButterflies(){return <div className="dd-butterflies" aria-hidden="true">{[0,1,2].map(i=><div key={i} className={`dd-butterfly-flight dd-butterfly-flight-${i}`}><div className="dd-butterfly"><i className="dd-butterfly-wing dd-butterfly-upper"/><i className="dd-butterfly-wing dd-butterfly-lower"/><i className="dd-butterfly-body"/></div></div>)}</div>}

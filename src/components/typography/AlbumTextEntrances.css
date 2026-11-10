@@ -1,0 +1,9 @@
+@keyframes album-ink-arrive{0%{opacity:.15;filter:blur(3px);clip-path:inset(0 0 80% 0)}65%{opacity:.8;filter:blur(.4px)}100%{opacity:1;filter:blur(0);clip-path:inset(0)}}
+.album-text-enter.album-text-arrived{animation:album-ink-arrive 1.15s cubic-bezier(.2,.65,.3,1) both}
+.dd-narrative{padding-top:32vh}.dd-act,.dd-ambiguous-act{min-height:34svh;padding-top:5vh;padding-bottom:5vh}.dd-vacation-end,.dd-star-act--6,.dd-ambiguous-act--21{min-height:58svh}.dd-unfinished{gap:7vh}
+.cy-song-fragment{min-height:30svh}.cy-exploration{margin-top:7vh;margin-bottom:6vh}.cy-song-stream{padding-top:3vh}
+.ja-lyric-pair{min-height:30svh;padding-top:5vh;padding-bottom:5vh}.ja-given-him{margin-top:7vh}.ja-passing-line{min-height:32svh;padding-top:5vh;padding-bottom:5vh}.ja-sun-verse{min-height:42svh;padding-top:5vh;padding-bottom:5vh}.ja-release .ja-passing-line:nth-child(2){min-height:60svh}
+.fl-dream-phrase{min-height:30svh;padding-top:5vh;padding-bottom:5vh}.fl-love-scene{min-height:85svh}.fl-bean-scene{min-height:90svh;padding-top:12vh;padding-bottom:8vh;gap:28px}.fl-writing footer{padding-top:7vh;padding-bottom:7vh;gap:25px}
+.yy-thought-field{min-height:85svh;padding-top:7vh}.yy-thought{margin-bottom:4vh}.yy-falling-stage{height:42svh;min-height:300px}.yy-real-rain{position:fixed;inset:0;width:100%;height:100svh;pointer-events:none;z-index:32;mix-blend-mode:screen}
+@media(max-width:640px){.dd-act,.dd-ambiguous-act{min-height:32svh;padding-block:5vh}.cy-song-fragment{min-height:28svh}.ja-lyric-pair{min-height:30svh;padding-block:5vh}.ja-passing-line{min-height:30svh;padding-block:5vh}.ja-sun-verse{min-height:38svh}.fl-dream-phrase{min-height:30svh;padding-block:5vh}}
+@media(prefers-reduced-motion:reduce){.album-text-enter.album-text-arrived{animation:none!important}}

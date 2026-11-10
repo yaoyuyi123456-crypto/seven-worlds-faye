@@ -1,0 +1,6 @@
+import {DidarEye} from './DidarEye';
+import {DIDAR_DIRECTORY_PHOTO} from '../data/didarArt';
+import './DidarDirectory.css';
+import './DidarButterflies.css';
+type Track={number:string;title:string;signatureLyric:string;extendedLyricSnippet:string;artisticNote:string};
+export function DidarDirectory({tracks,onSelect,onHome}:{tracks:Track[];onSelect:(track:Track)=>void;onHome:()=>void}){return <main className="dd-dream-index dd-butterfly-index"><div className="dd-dream-eye"><DidarEye src={DIDAR_DIRECTORY_PHOTO}/></div><nav><button onClick={onHome}>← HOME</button><span>FAYE WONG · 1995</span></nav><header><span>ALMOST / TOUCHING</span><h1><i>Di</i><b>—</b><em>Dar</em></h1></header><section className="dd-butterfly-choices" aria-label="点击蝴蝶选择歌曲">{tracks.map((track,i)=><div key={track.title} className={`dd-butterfly-choice dd-butterfly-choice-${i}`}><button className="dd-song-butterfly" aria-label={`进入《${track.title}》`} onClick={()=>onSelect(track)}><span className="dd-butterfly" aria-hidden="true"><i className="dd-butterfly-wing dd-butterfly-upper"/><i className="dd-butterfly-wing dd-butterfly-lower"/><i className="dd-butterfly-body"/></span></button></div>)}</section><p className="dd-butterfly-tip">点击蝴蝶</p></main>}
