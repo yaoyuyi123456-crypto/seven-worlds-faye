@@ -142,8 +142,8 @@ export const UserLyricsSpaces: React.FC<UserLyricsSpacesProps> = ({
 
   if (FOCUSED_LAB_IDS.includes(activeEntry.id)) {
     return <FocusedLyricLab key={activeEntry.id} entry={activeEntry} onHome={onBackToHome}
-      onBack={() => onNavigateToWorld ? onNavigateToWorld(activeEntry.albumId) : onBackToHome?.()}
-      backLabel={`← 返回《${activeEntry.albumTitle}》专辑目录`}
+      onBack={() => activeEntry.id === 'woaini_jiangai' ? onBackToHome?.() : onNavigateToWorld ? onNavigateToWorld(activeEntry.albumId) : onBackToHome?.()}
+      backLabel={activeEntry.id === 'woaini_jiangai' ? '← 返回主页' : `← 返回《${activeEntry.albumTitle}》专辑目录`}
       onSelect={id => { setSelectedEntryId(id); window.scrollTo({ top: 0, behavior: 'instant' }); }} />;
   }
 
@@ -191,7 +191,7 @@ export const UserLyricsSpaces: React.FC<UserLyricsSpacesProps> = ({
 
         {/* Minimalist Action Controls */}
         <div className="flex items-center gap-3">
-          {onNavigateToWorld && <button onClick={() => onNavigateToWorld(activeEntry.albumId)} className="text-xs px-3 py-2 border border-white/30 rounded-full">← 返回《{activeEntry.albumTitle}》专辑目录</button>}
+          {onNavigateToWorld && activeEntry.id !== 'woaini_jiangai' && <button onClick={() => onNavigateToWorld(activeEntry.albumId)} className="text-xs px-3 py-2 border border-white/30 rounded-full">← 返回《{activeEntry.albumTitle}》专辑目录</button>}
           {onBackToHome && (
             <button
               onClick={onBackToHome}

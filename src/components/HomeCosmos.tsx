@@ -378,12 +378,12 @@ export const HomeCosmos: React.FC<HomeCosmosProps> = ({ onEnterWorld, onEnterIns
           </p>
         </div>
 
-        <div className="relative z-10 h-[620px] w-full sm:h-[720px]">
+        <div className="home-album-orbit-stage relative z-10 h-[620px] w-full sm:h-[720px]">
           <CircularCarousel
             items={carouselItems}
             preset="orbit"
             intro="assemble"
-            cardWidth={260}
+            cardWidth={330}
             aspectRatio={0.85}
             autoplay="drift"
             speed={5}

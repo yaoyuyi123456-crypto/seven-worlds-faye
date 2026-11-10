@@ -18,7 +18,6 @@ import { WorldFaye1997 } from './components/worlds/WorldFaye1997';
 import { WorldJiangai } from './components/worlds/WorldJiangai';
 import { SevenWorldsNav } from './components/SevenWorldsNav';
 import { UserLyricsSpaces } from './components/UserLyricsSpaces';
-import { FayeAISection } from './components/FayeAISection';
 import { AlbumSongSelection } from './components/AlbumSongSelection';
 import { AudioPlayerBar } from './components/AudioPlayerBar';
 import { fayeAudio } from './utils/audioSynthesizer';
@@ -199,7 +198,7 @@ export default function App() {
           key={currentWorld}
           initialEntryId={currentWorld.slice('installation:'.length)}
           entryIds={[currentWorld.slice('installation:'.length)]}
-          onBackToHome={handleReturnCosmos}
+          onBackToHome={() => handleTabChange('home')}
           onNavigateToWorld={handleEnterWorld}
         />
       )}
@@ -221,10 +220,6 @@ export default function App() {
             <AlbumImageryLab onEnterWorld={handleEnterWorld} onEnterInstallation={handleEnterInstallation}/>
           )}
 
-          {/* TAB 06: FAYE AI (AI Cultural Guide) */}
-          {activeTab === 'ai' && (
-            <FayeAISection />
-          )}
         </main>
       )}
 

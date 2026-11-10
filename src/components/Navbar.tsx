@@ -24,7 +24,6 @@ export const Navbar: React.FC<NavbarProps> = ({
   const navItems = [
     { id: 'home', label: 'HOME', title: '音乐展览' },
     { id: 'lyrics', label: 'LYRICS LAB', title: '意象实验' },
-    { id: 'ai', label: 'FAYE AI', title: '文化导览' },
   ];
 
   const handleToggleVinyl = (e: React.MouseEvent) => {
