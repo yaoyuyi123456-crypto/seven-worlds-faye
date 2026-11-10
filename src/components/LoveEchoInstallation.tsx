@@ -1,0 +1,5 @@
+import {useRef,useState} from 'react';
+import {motion,useScroll,useTransform} from 'motion/react';
+import {useTypographyReducedMotion} from './typography/useTypographyReducedMotion';
+import './LoveEchoInstallation.css';
+export function LoveEchoInstallation({onOpen}:{onOpen?:()=>void}){const ref=useRef<HTMLElement>(null),reduced=useTypographyReducedMotion(),[apart,setApart]=useState(false);const {scrollYProgress}=useScroll({target:ref,offset:['start end','end start']});const left=useTransform(scrollYProgress,[0,.5,1],[-45,0,-45]),right=useTransform(scrollYProgress,[0,.5,1],[45,0,45]);return <section ref={ref} className="holiday-love-echo"><h2>我爱你</h2><button className="holiday-love-letters" onClick={()=>setApart(v=>!v)} aria-label="触碰爱与叹息，让文字聚散" aria-pressed={apart}>{['爱','哎','爱','哎'].map((letter,i)=><motion.span key={i} style={{x:reduced?0:i%2?right:left}} animate={reduced?{}:{y:apart?(i%2?-20:20):[0,i%2?8:-8,0],opacity:apart?.5:.9,rotate:apart?(i%2?7:-7):0}} transition={{duration:apart?1.2:5+i,repeat:apart?0:Infinity}}>{letter}</motion.span>)}</button>{onOpen&&<button className="holiday-love-open" onClick={onOpen}>进入《我爱你》完整装置 ↗</button>}</section>}

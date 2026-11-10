@@ -1,4 +1,5 @@
 import { YuyanFuzzyLyric } from '../typography/YuyanFuzzyLyric';
+import { usePageStart } from '../typography/usePageStart';
 import React, { useState } from 'react';
 import { MotionConfig } from 'motion/react';
 import { SpaceXinfangke, SpaceBihanhua, SpaceXiangnaier } from '../yuyan/YuyanPoetrySpaces';
@@ -16,6 +17,7 @@ const songs = [
 export const WorldYuyan: React.FC<{ onBackToCosmos: () => void; onSwitchWorld: (id: string) => void; initialSong?: string }> = ({ onBackToCosmos, onSwitchWorld, initialSong }) => {
   const [selected, setSelected] = useState<number | null>(() => { const index = songs.findIndex(song => song.title === initialSong); return index < 0 ? null : index; });
   const [reset, setReset] = useState(0);
+  usePageStart(selected);
   const reduced = useTypographyReducedMotion();
   const select = (index: number | null) => { setSelected(index); window.scrollTo({ top: 0, behavior: 'instant' }); };
   const song = selected === null ? null : songs[selected];

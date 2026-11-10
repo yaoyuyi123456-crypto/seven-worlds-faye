@@ -787,8 +787,8 @@ export const SEVEN_WORLDS: WorldDefinition[] = [
         lyricist: '林夕',
         arranger: '张亚东',
         duration: '03:42',
-        signatureLyric: '我只爱陌生人，给我一盒烟，或者一个眼神；不要问我的过去，不要许诺明天。',
-        extendedLyricSnippet: '我只爱陌生人 / 给我一盒烟 或者一个眼神 / 不用了解 不用负责 / 只要这一刻的温度 / (采样：童童奶声奶气的问候)',
+        signatureLyric: '我爱得，比脸色还单纯，比宠物还天真。',
+        extendedLyricSnippet: '我爱得， / 比脸色还单纯， / 比宠物还天真， / 当我需要的， / 只是一个吻， / 就给我一个吻， / 我只爱陌生人。',
         artisticNote: '张亚东标志性的慵懒摇摆节拍，结尾处采样窦靖童稚嫩的童音“Come on baby”，反差令人动容。',
         tempoBpm: 102,
         moodKeywords: ['张亚东', '陌生人哲学', '窦靖童采样']

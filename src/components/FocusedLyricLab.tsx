@@ -31,7 +31,7 @@ export function FocusedLyricLab({ entry, onSelect, onHome, onBack, backLabel = '
   return <div className={`fl-lab ${love ? 'fl-love' : dream ? 'fl-dream' : 'fl-bean'}`} ref={ref} onPointerMove={e => {
     if (!reduced && e.pointerType !== 'touch') x.set((e.clientX / window.innerWidth - .5) * 40);
   }} onPointerLeave={() => x.set(0)}>
-    <nav className="fl-navigation" aria-label="意象实验歌曲">{FOCUSED_LAB_IDS.map((id, i) => <button key={id} onClick={() => onSelect(id)} aria-current={entry.id === id ? 'page' : undefined}>{['我爱你', '红豆', '催眠'][i]}</button>)}{onHome && <button onClick={onHome}>HOME</button>}</nav>
+    <nav className="fl-navigation" aria-label="意象实验歌曲">{[['woaini_jiangai','我爱你'],['holiday_didar','假期'],['red_bean_changyou','红豆'],['cuimian_stranger','催眠']].map(([id,title]) => <button key={id} onClick={() => onSelect(id)} aria-current={entry.id === id ? 'page' : undefined}>{title}</button>)}{onHome && <button onClick={onHome}>HOME</button>}</nav>
     {onBack && <button className="fl-back-to-tin" onClick={onBack}>{backLabel}</button>}
     {dream && <SongEmojiAtmosphere />}
     <div className="fl-photography" aria-hidden="true">
@@ -45,7 +45,7 @@ export function FocusedLyricLab({ entry, onSelect, onHome, onBack, backLabel = '
       {love ? <section className="fl-love-scene" aria-label="爱与哎的聚散">{['爱','哎','爱','哎'].map((char, i) => <motion.span key={i} style={{ x: reduced ? 0 : i % 2 ? right : left }} animate={reduced ? { y: 0 } : { y: [0, i % 2 ? 13 : -13, 0] }} transition={{ duration: 6 + i, repeat: Infinity }}>{char}</motion.span>)}</section>
       : dream ? fragments.map((line, i) => <section key={`${line}-${i}`} className="fl-dream-phrase"><motion.p style={{ x: reduced ? 0 : i % 2 ? right : left }}>{line}</motion.p></section>)
       : null}
-      <footer>{(love || dream) && <p>{entry.userInterpretation}</p>}<button onClick={() => onSelect(FOCUSED_LAB_IDS[(FOCUSED_LAB_IDS.indexOf(entry.id) + 1) % 3])}>继续 ↗</button></footer>
+      <footer>{(love || dream) && <p>{entry.userInterpretation}</p>}<button onClick={() => onSelect(love ? 'holiday_didar' : FOCUSED_LAB_IDS[(FOCUSED_LAB_IDS.indexOf(entry.id) + 1) % 3])}>{love ? '继续 · 假期 ↗' : '继续 ↗'}</button></footer>
     </div>
   </div>;
 }

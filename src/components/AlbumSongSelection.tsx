@@ -1,4 +1,5 @@
 import React from 'react';
+import { usePageStart } from './typography/usePageStart';
 import { DidarDirectory } from './DidarDirectory';
 import { FeimimiSongSpaces } from './FeimimiSongSpaces';
 import { ArrowLeft, ArrowUpRight } from 'lucide-react';
@@ -95,6 +96,7 @@ export const AlbumSongSelection: React.FC<AlbumSongSelectionProps> = ({ albumId,
         }
       : null;
   const [selectedTrack, setSelectedTrack] = React.useState<DirectoryTrack | null>(() => album?.tracks.find(track => track.title === initialSongTitle) || null);
+  usePageStart(`${albumId}:${selectedTrack?.title || 'directory'}`);
 
   if (!album) return null;
 
@@ -113,6 +115,7 @@ export const AlbumSongSelection: React.FC<AlbumSongSelectionProps> = ({ albumId,
 
   if (selectedTrack && albumId === 'didar' && DIDAR_ART_TITLES.some(title => title === selectedTrack.title)) {
     return <DidarArtSpace title={selectedTrack.title as DidarArtTitle} originalPhoto={album.heroPhoto}
+      onOpenLove={() => onSelectSong('woaini_jiangai')}
       onBack={() => { setSelectedTrack(null); window.scrollTo({ top: 0, behavior: 'instant' }); }} onHome={onBackToHome}
       onSelect={title => { const track = album.tracks.find(item => item.title === title); if (track) handleSelectTrack(track); }}
     />;

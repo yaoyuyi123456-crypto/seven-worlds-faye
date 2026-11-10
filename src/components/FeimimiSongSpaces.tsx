@@ -6,9 +6,9 @@ import './FeimimiSongSpaces.css';
 import SideRays from './effects/SideRays';
 
 type Props = { title: string; photo: string; onBack: () => void; onHome: () => void };
-function Verse({ children, className = '' }: { children: React.ReactNode; className?: string }) {
+function Verse({ children, className = '', duration = 1.5 }: { children: React.ReactNode; className?: string; duration?: number }) {
   const reduced = useTypographyReducedMotion();
-  return <motion.div className={`fms-verse ${className}`} initial={reduced ? false : { opacity: 0, y: 28 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ amount: .25, once: true }} transition={{ duration: 1.5 }}>{children}</motion.div>;
+  return <motion.div className={`fms-verse ${className}`} initial={reduced ? false : { opacity: 0, y: 28 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ amount: .1, once: true }} transition={{ duration }}>{children}</motion.div>;
 }
 function Credits({ track }: { track: TrackData }) {
   return <footer className="fms-credits"><p>作曲 · {track.composer}　作词 · {track.lyricist}　编曲 · {track.arranger}</p><details><summary>关于这首歌</summary><p>{track.artisticNote}</p></details><span>王菲 · 菲靡靡之音 · 1995</span></footer>;
@@ -48,9 +48,9 @@ function Smoke({ photo }: { photo: string }) {
   const dusk = useTransform(progress, [0, .6, 1], [0, .12, .2]);
   const dissolve = useTransform(progress, [.72, .98], [1, 0]);
   return <div className="fms-smoke" ref={root}><div className="fms-smoke-art"><SideRays rayColor1="#FFC46B" rayColor2="#96c8ff" origin="top-right" speed={2.5} intensity={2} spread={2} density={5} followMouse/><img src={photo} alt="短发浅色衣装的王菲"/><svg className="fms-smoke-ribbons" viewBox="0 0 1000 1000" preserveAspectRatio="none" aria-hidden="true"><defs><filter id="fms-smoke-flow" x="-40%" y="-40%" width="180%" height="180%"><feTurbulence type="fractalNoise" baseFrequency=".009 .016" numOctaves="3" seed="9"/><feDisplacementMap in="SourceGraphic" scale="110"/><feGaussianBlur stdDeviation="9"/></filter><linearGradient id="smoke-ink"><stop stopColor="#f5f1e8" stopOpacity="0"/><stop offset=".5" stopColor="#fffdf7" stopOpacity=".6"/><stop offset="1" stopColor="#e6ded0" stopOpacity="0"/></linearGradient></defs>{[0,1,2].map(i=><path key={i} className={`fms-smoke-ribbon ribbon-${i}`} d={`M${80+i*110} 1120C${600+i*90} 700 -200 600 ${300+i*100} 300S600 30 240 -200`} fill="none" stroke="url(#smoke-ink)" strokeWidth={130-i*24} filter="url(#fms-smoke-flow)"/>)}</svg><motion.div className="fms-dusk" style={{ opacity: reduced ? .08 : dusk }}/></div>
-    <section className="fms-smoke-start"><h1>又见炊烟</h1><Verse><p>又见炊烟升起</p></Verse></section>
-    <section className="fms-smoke-middle"><Verse><p>暮色罩大地</p></Verse><Verse className="fms-smoke-question"><p>想问阵阵炊烟<br/>你要去哪里</p></Verse></section>
-    <section className="fms-smoke-end"><motion.div style={{ opacity: reduced ? 1 : dissolve }}><Verse><p>夕阳有诗情<br/>黄昏有画意</p><p>诗情画意虽然美丽<br/>我心中只有你</p></Verse></motion.div></section>
+    <section className="fms-smoke-start"><h1>又见炊烟</h1><Verse duration={.45}><p>又见炊烟升起</p></Verse></section>
+    <section className="fms-smoke-middle"><Verse duration={.45}><p>暮色罩大地</p></Verse><Verse duration={.45} className="fms-smoke-question"><p>想问阵阵炊烟<br/>你要去哪里</p></Verse></section>
+    <section className="fms-smoke-end"><motion.div style={{ opacity: reduced ? 1 : dissolve }}><Verse duration={.45}><p>夕阳有诗情<br/>黄昏有画意</p><p>诗情画意虽然美丽<br/>我心中只有你</p></Verse></motion.div></section>
   </div>;
 }
 function Snow({ photo }: { photo: string }) {

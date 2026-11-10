@@ -1,4 +1,5 @@
 import React, { useRef } from 'react';
+import {LoveEchoInstallation} from './LoveEchoInstallation';
 import {DidarButterflies} from './DidarButterflies';
 import { ArrowLeft } from 'lucide-react';
 import { motion, useMotionValue, useScroll, useSpring, useTransform } from 'motion/react';
@@ -12,6 +13,7 @@ import CircularText from './typography/CircularText';
 import FallingText from './effects/FallingText';
 
 interface Props {
+  onOpenLove?: () => void;
   title: DidarArtTitle;
   originalPhoto: string;
   onBack: () => void;
@@ -59,7 +61,7 @@ function MelodyCharacter({ letter, index, reduced }: { letter: string; index: nu
   </motion.span>;
 }
 
-function Vacation({ originalPhoto }: { originalPhoto: string }) {
+function Vacation({ originalPhoto, onOpenLove }: { originalPhoto: string; onOpenLove?: () => void }) {
   const { ref, reduced, progress, wind, move, leave } = useSpace();
   const photographFade = useTransform(progress, [0, .4, .74, 1], [1, .95, .7, .6]);
   const finalOpacity = useTransform(progress, [.55, .86, 1], [.1, 1, 1]);
@@ -78,6 +80,7 @@ function Vacation({ originalPhoto }: { originalPhoto: string }) {
       <section className="dd-holiday-thought"><p>{HOLIDAY_INTERPRETATION}</p><div className="dd-holiday-circle"><CircularText text="假期 · A TEMPORARY VACATION · " onHover="speedUp" direction="clockwise" spinDuration={20} size={200} fontSize={20} fontWeight={400} draggable hoverTilt={20} /></div></section>
       <div className="dd-holiday-complete" aria-label="假期完整歌词">{HOLIDAY_LINES.slice(0,-1).map((line,i)=><p className={`dd-holiday-line dd-holiday-line-${Math.floor(i/7)%3}`} key={i}><ASCIIText text={line} asciiFontSize={8} colors={['#ff6188','#fc9867','#ffd866']} textScale={1} blocks={.9} waves={1} waveSpeed={1} chroma={1} tilt={1} hueShift={1} scramble={.6} clickRipple idle interactive /></p>)}</div>
       <section className="dd-act dd-vacation-end"><motion.p className="dd-holiday-last" style={{ opacity: reduced ? 1 : finalOpacity }}><ASCIIText text="我爱上过你。" /></motion.p></section>
+      <LoveEchoInstallation onOpen={onOpenLove}/>
     </div>
   </div>;
 }
@@ -168,13 +171,13 @@ function Ambiguous({ originalPhoto }: { originalPhoto: string }) {
   </div>;
 }
 
-export function DidarArtSpace({ title, originalPhoto, onBack, onHome, onSelect }: Props) {
+export function DidarArtSpace({ title, originalPhoto, onBack, onHome, onSelect, onOpenLove }: Props) {
   const reduced = useTypographyReducedMotion();
   return <main className="dd-art">
     <div className="dd-song-aurora" aria-hidden="true">{!reduced && <Aurora colorStops={['#5227FF','#7cff67','#5227FF']} amplitude={1} blend={.5} height={.45} speed={1} glow={.6}/>}</div>
     <nav className="dd-navigation" aria-label="Di-Dar 歌曲导航"><button onClick={onBack}><ArrowLeft size={14} /> Di-Dar 目录</button><div>{DIDAR_ART_TITLES.map(song => <button key={song} aria-current={title === song ? 'page' : undefined} onClick={() => { onSelect(song); window.scrollTo({ top: 0, behavior: 'instant' }); }}>{song}</button>)}</div>{onHome && <button onClick={onHome}>HOME</button>}</nav>
     <header className="dd-title"><span>{CONCEPTS[DIDAR_ART_TITLES.indexOf(title)]}</span><h1><DidarKineticText text={title} /></h1><span>Di-Dar / 1995</span></header>
-    {title === '假期' ? <Vacation key={title} originalPhoto={originalPhoto} /> : title === '迷路' ? <Lost key={title} originalPhoto={DIDAR_PHOTOS[1]} /> : title === '流星' ? <Stars key={title} originalPhoto={DIDAR_PHOTOS[2]} /> : <Ambiguous key={title} originalPhoto={DIDAR_PHOTOS[4]} />}
+    {title === '假期' ? <Vacation key={title} originalPhoto={originalPhoto} onOpenLove={onOpenLove}/> : title === '迷路' ? <Lost key={title} originalPhoto={DIDAR_PHOTOS[1]} /> : title === '流星' ? <Stars key={title} originalPhoto={DIDAR_PHOTOS[2]} /> : <Ambiguous key={title} originalPhoto={DIDAR_PHOTOS[4]} />}
     <footer className="dd-footer"><button onClick={onBack}>↖ 返回 Di-Dar 目录</button><button onClick={() => { onSelect(DIDAR_ART_TITLES[(DIDAR_ART_TITLES.indexOf(title) + 1) % 4]); window.scrollTo({ top: 0, behavior: 'instant' }); }}>下一空间 ↗</button></footer>
   </main>;
 }

@@ -1,4 +1,5 @@
 import { BackgroundMusic } from './components/BackgroundMusic';
+import { usePageStart } from './components/typography/usePageStart';
 /**
  * @license
  * SPDX-License-Identifier: Apache-2.0
@@ -28,6 +29,7 @@ import { AlbumImageryLab } from './components/AlbumImageryLab';
 export default function App() {
   const [currentWorld, setCurrentWorld] = useState<string>('cosmos');
   const [activeTab, setActiveTab] = useState<string>('home');
+  usePageStart(`${currentWorld}:${activeTab}`);
   const [currentTrackId, setCurrentTrackId] = useState<string | null>(null);
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
   const [musicOpen,setMusicOpen] = useState(true);
@@ -55,7 +57,7 @@ export default function App() {
       return;
     }
     setCurrentWorld(worldId === 'changyou' || worldId === 'yuyan' ? worldId : `album:${worldId}`);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    window.scrollTo({ top: 0, behavior: 'instant' });
   };
 
   const handleEnterInstallation = (entryId: string) => {

@@ -35,6 +35,7 @@ import { fayeAudio } from '../utils/audioSynthesizer';
 import { JiangaiLyricScene } from './JiangaiLyricScene';
 import { JIANGAI_SONG_IDS } from '../data/jiangaiArt';
 import { DidarArtSpace } from './DidarArtSpace';
+import {usePageStart} from './typography/usePageStart';
 import { FocusedLyricLab, FOCUSED_LAB_IDS } from './FocusedLyricLab';
 import { WorldYuyan } from './worlds/WorldYuyan';
 
@@ -54,6 +55,7 @@ export const UserLyricsSpaces: React.FC<UserLyricsSpacesProps> = ({
 }) => {
   const [entries, setEntries] = useState<UserLyricEntry[]>(loadUserInterpretations);
   const [selectedEntryId, setSelectedEntryId] = useState<string>(initialEntryId || 'holiday_didar');
+  usePageStart(selectedEntryId);
   const [isEditorOpen, setIsEditorOpen] = useState(false);
   const [editingEntry, setEditingEntry] = useState<UserLyricEntry | null>(null);
   
@@ -84,8 +86,7 @@ export const UserLyricsSpaces: React.FC<UserLyricsSpacesProps> = ({
   const [waterRipple, setWaterRipple] = useState(0);
 
   const visibleEntries = entryIds ? entries.filter(entry => entryIds.includes(entry.id)) : entries;
-  const activeEntry = (FOCUSED_LAB_IDS.includes(selectedEntryId) && visibleEntries.some(e => FOCUSED_LAB_IDS.includes(e.id))
-    ? entries.find(e => e.id === selectedEntryId) : visibleEntries.find(e => e.id === selectedEntryId)) || visibleEntries[0] || entries[0];
+  const activeEntry = entries.find(e => e.id === selectedEntryId) || visibleEntries[0] || entries[0];
   const activeIdx = visibleEntries.findIndex(e => e.id === activeEntry.id);
   const isPaperSong = JIANGAI_SONG_IDS.some(id => id === activeEntry.id);
 
@@ -153,6 +154,7 @@ export const UserLyricsSpaces: React.FC<UserLyricsSpacesProps> = ({
 
   if (activeEntry.id === 'holiday_didar') {
     return <DidarArtSpace title="假期" originalPhoto={activeEntry.photoUrl}
+      onOpenLove={() => { setSelectedEntryId('woaini_jiangai'); window.scrollTo({top:0,behavior:'instant'}); }}
       onBack={() => onNavigateToWorld ? onNavigateToWorld('didar') : onBackToHome?.()}
       onHome={onBackToHome} onSelect={title => { if (title !== '假期') onNavigateToWorld?.(`didar-song:${title}`); }} />;
   }
