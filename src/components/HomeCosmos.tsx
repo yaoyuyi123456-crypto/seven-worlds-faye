@@ -420,21 +420,15 @@ export const HomeCosmos: React.FC<HomeCosmosProps> = ({ onEnterWorld, onEnterIns
         </div>
 
         {/* Floating Inspection HUD */}
-        <div className="relative z-10 max-w-7xl mx-auto my-8 flex flex-col md:flex-row items-center justify-between gap-4 text-xs font-mono-code text-zinc-400 border border-white/10 bg-[#07080a]/90 backdrop-blur-md px-6 py-4 rounded-xl">
-          <div className="flex items-center gap-3">
-            <span className="w-2 h-2 rounded-full bg-[#d4f43b] animate-ping" />
-            <span className="text-white font-bold">
+        <div className="home-orbit-invitation relative z-10 max-w-7xl mx-auto my-8 flex flex-col items-center justify-center gap-4 text-zinc-100 px-2 py-4">
+          <span className="home-orbit-upward" aria-hidden="true">↑</span>
+          <div className="text-center">
+            <span className="home-orbit-invitation-text">
               {hoveredWorld ? `EXPLORING: WORLD ${hoveredWorld.number} · 《${hoveredWorld.chineseTitle}》 (${hoveredWorld.year})` : '点击任意星系入口，直接跳跃至专属专辑宇宙'}
             </span>
           </div>
 
-          {hoveredWorld && (
-            <div className="text-zinc-300 font-editorial italic truncate max-w-md hidden md:block">
-              “{hoveredWorld.manifesto}”
-            </div>
-          )}
-
-          <div className="text-[11px] text-zinc-500">
+          <div className="home-orbit-credit text-zinc-200">
             UNOFFICIAL ART ARCHIVE · 1994—2003
           </div>
         </div>

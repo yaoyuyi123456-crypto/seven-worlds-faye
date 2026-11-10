@@ -65,7 +65,7 @@ export const INITIAL_USER_INTERPRETATIONS: UserLyricEntry[] = [
     albumId: 'jiangai',
     year: 2003,
     // EXACT user input:
-    rawLyric: '高架桥过去了，路口还有好过个。天空血红色，星星灰银色，你的爱人呢….',
+    rawLyric: '高架桥过去了，路口还有好多个。天空血红色，星星灰银色，你的爱人呢….',
     // EXACT user interpretation:
     userInterpretation: '城市、夜晚、车窗、移动、陌生人与亲密关系。坐在车内观察世界的流动体验。',
     visualTheme: '城市、夜晚、车窗、移动、陌生人与亲密关系。使用横向移动的城市摄影、窗外光影、模糊的路灯和具有电影感的滚动效果，歌词随画面移动逐渐出现。',
@@ -345,7 +345,8 @@ export function loadUserInterpretations(): UserLyricEntry[] {
           albumTitle: canonical.albumTitle,
           albumId: canonical.albumId,
           year: canonical.year,
-          photoUrl: canonical.photoUrl
+          photoUrl: canonical.photoUrl,
+          rawLyric: item.id === 'passenger_jiangai' ? item.rawLyric.replace('路口还有好过个', '路口还有好多个') : item.rawLyric
         };
       });
       const savedIds = new Set(savedEntries.map((item: UserLyricEntry) => item.id));
